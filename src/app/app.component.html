@@ -1,3 +1,106 @@
-<h1>
-  {{title}}
-</h1>
+<div class="col-lg-10">
+    <button class="btn btn-primary btn-block" (click)="show = !show">{{show ? 'SHOW MOVIE LIST' : 'ADD MOVIE'}}</button>
+</div>
+    <div *ngIf="show">
+      <!-- MOVIE NAME-->
+<div class="form-group">
+  <div class="col-sm-10">
+    <form [formGroup]="myform" (ngSubmit)="submit(myform.value)">
+        <!-- MOVIE NAME-->
+      <div class="form-group">
+          <label> ENTER MOVIE NAME</label>
+        <input type="text" name="name" class="form-control"formControlName="name">
+        <div *ngIf= "myform.controls['name'].hasError('required')" class= "alert alert-danger"> Name required</div>
+        <div *ngIf= "myform.controls['name'].hasError('minlength')" class= "alert alert-danger">
+        Min two  letters required
+ 
+       </div>
+       <div *ngIf= "myform.controls['name'].hasError('pattern')" class= "alert alert-danger">
+        only letters required
+   
+         </div>
+        
+      </div>
+      <!-- MOVIE NAME-->
+      <!-- RATING NAME-->
+      <div class="form-group">
+          <label> GIVE MOVIE RATINGS</label>
+          <input type="text" name="Number" class="form-control" formControlName="myRatingControl" >
+          <div *ngIf= "myform.controls['myRatingControl'].hasError('required')" class= "alert alert-danger">
+            rating required </div>
+             
+       
+          <div *ngIf= "myform.controls['myRatingControl'].hasError('pattern')" class= "alert alert-danger">
+              only Numbers required
+         
+               </div>
+              
+      </div>
+      <!-- RATING NAME-->
+        <!-- RATING NAME-->
+        <div class="form-group">
+            <input type="date" name=date class="form-control" formControlName="date" >
+            <div *ngIf= "myform.controls['date'].hasError('required')" class= "alert alert-danger">
+               date  required </div>
+              
+        </div>
+          <!-- RATING NAME-->
+        <!-- RATING descriptiom-->
+      <div class="form-group">
+          <label> ENTER MOVIE DESCRIPTION</label>
+        <input type="text" name="lastName" class="form-control" formControlName="lastName" >
+        <div *ngIf= "myform.controls['lastName'].hasError('required')" class= "alert alert-danger">
+       DEscription required</div>
+        <div *ngIf= "myform.controls['lastName'].hasError('minlength')" class= "alert alert-danger">
+          Min two  letters required
+   
+         </div>
+         <div *ngIf= "myform.controls['lastName'].hasError('pattern')" class= "alert alert-danger">
+            only letters required
+       
+             </div>
+      </div>
+        <!-- RATING NAME-->
+     
+  
+      
+      <button type="submit" class="btn btn-success  btn-block" [disabled]= "myform.invalid">Submit</button>
+    </form>
+
+    <hr/>
+    <div *ngIf="arrayList.length > 0">
+      <div class="table-responsive">
+        <table class="table table-hover" appRatingcolor>
+          <thead>
+            <tr>
+              <th>Name</th>
+          
+  
+              <th> rating </th>
+              <th> DATE </th>
+              <th> DESCRIPTION </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of arrayList">
+              <td>{{item.name}}</td>
+              <td>
+                  <form [formGroup]="myform">
+                     
+                      <star-rating-comp [starType]="'svg'" formControlName="myRatingControl" ></star-rating-comp>
+                     
+                    </form>
+                   </td>    
+                   <td>{{item.date|json :date:'medium'}} </td>
+              <td>{{item.lastName}}</td>
+              
+                   
+            
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
